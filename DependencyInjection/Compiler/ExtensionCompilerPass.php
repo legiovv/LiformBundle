@@ -37,16 +37,16 @@ class ExtensionCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds(self::EXTENSION_TAG) as $id => $attributes) {
             $extension = $container->getDefinition($id);
 
-            if (!isset(class_implements($extension->getClass())[ExtensionInterface::class])) {
+            if (!isset(class_implements($extension->getClass())['Limenius\Liform\Transformer\ExtensionInterface'])) {
                 throw new \InvalidArgumentException(sprintf(
                     "The service %s was tagged as a '%s' but does not implement the mandatory %s",
                     $id,
                     self::EXTENSION_TAG,
-                    ExtensionInterface::class
+                    'Limenius\Liform\Transformer\ExtensionInterface'
                 ));
             }
 
-            $liform->addMethodCall('addExtension', [$extension]);
+            $liform->addMethodCall('addExtension', array($extension));
         }
     }
 }
